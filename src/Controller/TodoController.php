@@ -13,7 +13,7 @@ class TodoController extends AbstractController
     /**
      * @Route("/todo/{id}", name="todo_show")
      */
-    public function show()
+    public function show($id)
     {
       $todo = $this->getDoctrine()
         ->getRepository(Todo::class)
