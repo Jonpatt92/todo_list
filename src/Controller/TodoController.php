@@ -37,6 +37,17 @@ class TodoController extends AbstractController
 
       $form = $this->createForm(TodoType::class, $todo);
 
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+
+          $task = $form->getData();
+
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($task);
+          $entityManager->flush();
+
+          return $this->redirectToRoute('todo_index');
+      }
       return $this->render('todo/new.html.twig', [
         'form' => $form->createView(),
       ]);
