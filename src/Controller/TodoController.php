@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TodoController extends AbstractController
 {
     /**
-     * @Route("/todos/{id}", name="todo_show")
+     * @Route("/todo/{id}", name="todo_show")
      */
     public function show($id)
     {
