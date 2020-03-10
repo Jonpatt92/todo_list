@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class TodoController extends AbstractController
 {
     /**
-     * @Route("/todo/{id}", name="todo_show")
+     * @Route("/todos/{id}", name="todo_show")
      */
     public function show($id)
     {
@@ -24,6 +24,14 @@ class TodoController extends AbstractController
       }
 
       return $this->render('todo/show.html.twig', ['todo' => $todo]); //Need to create Template to display queried $todo object
+
+    }
+
+    /**
+    * @Route("/todos/new", name="todo_new")
+    */
+    public function new()
+    {
 
     }
 }
