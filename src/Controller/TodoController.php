@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Form\Type\TodoType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TodoController extends AbstractController
 {
@@ -24,6 +26,30 @@ class TodoController extends AbstractController
       }
 
       return $this->render('todo/show.html.twig', ['todo' => $todo]); //Need to create Template to display queried $todo object
+    }
 
+    /**
+    * @Route("/todos/new", name="todo_new")
+    */
+    public function new(Request $request)
+    {
+      $todo = new Todo();
+
+      $form = $this->createForm(TodoType::class, $todo);
+
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+
+          $task = $form->getData();
+
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($task);
+          $entityManager->flush();
+
+          return $this->redirectToRoute('todo_index');
+      }
+      return $this->render('todo/new.html.twig', [
+        'form' => $form->createView(),
+      ]);
     }
 }
