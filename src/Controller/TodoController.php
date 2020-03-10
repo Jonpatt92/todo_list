@@ -52,4 +52,20 @@ class TodoController extends AbstractController
         'form' => $form->createView(),
       ]);
     }
+
+    /**
+     * @Route("/todos", name="todo_index")
+     */
+     public function index()
+     {
+       $todos = $this->getDoctrine()
+         ->getRepository(Todo::class)
+         ->findAll();
+
+       if (!$todos) {
+         throw $this->createNotFoundException('No todos were found');
+       }
+
+       return $this->render('todo/index.html.twig', ['todos' => $todos]);
+     }
 }
