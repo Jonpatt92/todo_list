@@ -25,7 +25,7 @@ class TodoController extends AbstractController
         throw $this->createNotFoundException('No todo found for id '.$id);
       }
 
-      return $this->render('todo/show.html.twig', ['todo' => $todo]); //Need to create Template to display queried $todo object
+      return $this->render('todo/show.html.twig', ['todo' => $todo]);
     }
 
     /**
