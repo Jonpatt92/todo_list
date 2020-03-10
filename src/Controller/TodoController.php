@@ -52,4 +52,47 @@ class TodoController extends AbstractController
         'form' => $form->createView(),
       ]);
     }
+
+    /**
+    * @Route("/todos", name="todo_index")
+    */
+    public function index()
+    {
+      $repository = $this->getDoctrine()->getRepository(Todo::class);
+
+      $incompleteTodos = $repository
+      ->findBy(['status' => 'Incomplete']);
+
+      $completeTodos = $repository
+      ->findBy(['status' => 'Complete']);
+
+      if (!$incompleteTodos && !$completeTodos) {
+        throw $this->createNotFoundException('No todos were found');
+      }
+
+      return $this->render('todo/index.html.twig', [
+        'incompleteTodos' => $incompleteTodos,
+        'completeTodos' => $completeTodos
+       ]);
+    }
+
+    /**
+    * @Route("/todo/complete/{id}", name="todo_complete")
+    */
+    public function update($id)
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $todo = $entityManager->getRepository(Todo::class)->find($id);
+
+      if (!$todo) {
+          throw $this->createNotFoundException(
+              'No todo found for id '.$id
+          );
+      }
+
+      $todo->setStatus('Complete');
+      $entityManager->flush();
+
+      return $this->redirectToRoute('todo_index');
+    }
 }
