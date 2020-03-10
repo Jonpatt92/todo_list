@@ -6,8 +6,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use App\Entity\Todo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Todo;
 
 class TodoType extends AbstractType
 {
@@ -18,7 +18,9 @@ class TodoType extends AbstractType
             ->add('status', HiddenType::class, [
               'data' => 'Incomplete'
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+              'label' => 'Create Task'
+            ])
         ;
     }
 
