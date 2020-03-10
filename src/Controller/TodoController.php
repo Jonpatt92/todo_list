@@ -32,8 +32,14 @@ class TodoController extends AbstractController
     /**
     * @Route("/todos/new", name="todo_new")
     */
-    public function new()
+    public function new(Request $request)
     {
+      $todo = new Todo();
 
+      $form = $this->createForm(TodoType::class, $todo);
+
+      return $this->render('task/new.html.twig', [
+        'form' => $form->createView(),
+      ]);
     }
 }
