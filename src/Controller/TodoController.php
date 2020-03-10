@@ -58,14 +58,21 @@ class TodoController extends AbstractController
      */
      public function index()
      {
-       $todos = $this->getDoctrine()
-         ->getRepository(Todo::class)
-         ->findAll();
+       $repository = $this->getDoctrine()->getRepository(Todo::class);
 
-       if (!$todos) {
+       $incompleteTodos = $repository
+         ->findBy(['status' => 'Incomplete']);
+
+       $completeTodos = $repository
+         ->findBy(['status' => 'Complete']);
+
+       if (!$incompleteTodos && !$completeTodos) {
          throw $this->createNotFoundException('No todos were found');
        }
 
-       return $this->render('todo/index.html.twig', ['todos' => $todos]);
+       return $this->render('todo/index.html.twig', [
+         'incompleteTodos' => $incompleteTodos,
+         'completeTodos' => $completeTodos
+       ]);
      }
 }
