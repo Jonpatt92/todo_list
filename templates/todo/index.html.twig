@@ -1,9 +1,22 @@
 <h2>All your Tasks</h2>
 
-<section id='all-tasks'>
+<h4>Incomplete Tasks</h4>
+<section id='incomplete-tasks'>
   <ul>
-    {% for todo in todos %}
-      <li>
+    {% for todo in incompleteTodos %}
+      <li id='incomplete-task'>
+        Task: {{todo.task}}<br>
+        Status: {{todo.status}}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<h4>Completed Tasks</h4>
+<section id='complete-tasks'>
+  <ul>
+    {% for todo in completeTodos %}
+      <li id='complete-task'>
         Task: {{todo.task}}<br>
         Status: {{todo.status}}
       </li>
