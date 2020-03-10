@@ -26,7 +26,6 @@ class TodoController extends AbstractController
       }
 
       return $this->render('todo/show.html.twig', ['todo' => $todo]); //Need to create Template to display queried $todo object
-
     }
 
     /**
@@ -38,7 +37,7 @@ class TodoController extends AbstractController
 
       $form = $this->createForm(TodoType::class, $todo);
 
-      return $this->render('task/new.html.twig', [
+      return $this->render('todo/new.html.twig', [
         'form' => $form->createView(),
       ]);
     }
